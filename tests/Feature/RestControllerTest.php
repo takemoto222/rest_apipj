@@ -25,4 +25,15 @@ class RestControllerTest extends TestCase
             'url' => $item->url
         ]);
     }
+    public function test_store_rest()
+    {
+        $data = [
+            'message' => 'rest',
+            'url' => 'rest@example.com',
+        ];
+        $response = $this->post('/api/v1/rest', $data);
+        $response->assertStatus(201);
+        $response->assertJsonFragment($data);
+        $this->assertDatabaseHas('rests', $data);
+    }
 }
